@@ -9,10 +9,11 @@ class Stock:
 		self.count  = 0
 
 	def printPrice(self):
-		print("\n" + self.name + ": " + str(self.price) + "\n")
+		print(self.name + ": " + str(self.price) + "\n")
 
 	def printTrade(self, act):
 		print("\n" + act + " order for " + self.name + " at " + str(self.price))
 		print("\nPrice: " + str(self.price))
 		print("\n1-hour average: " + str(self.avg))
 		print("\nZ-Score: " + str(self.zscore) + "\n")
+
