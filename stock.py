@@ -1,3 +1,5 @@
+from datetime import datetime
+import pytz
 
 class Stock:
 
@@ -13,6 +15,9 @@ class Stock:
 
 	def printTrade(self, act):
 		print("\n" + act + " order for " + self.name + " at " + str(self.price))
+		tz = pytz.timezone('America/New_York') 
+		time = datetime.now(tz).strftime("%H:%M:%S")
+		print(", " + time)
 		print("\nPrice: " + str(self.price))
 		print("\n1-hour Average: " + str(self.avg))
 		print("\nZ-Score: " + str(self.zscore) + "\n")
