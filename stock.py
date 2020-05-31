@@ -14,6 +14,6 @@ class Stock:
 	def printTrade(self, act):
 		print("\n" + act + " order for " + self.name + " at " + str(self.price))
 		print("\nPrice: " + str(self.price))
-		print("\n1-hour average: " + str(self.avg))
+		print("\n1-hour Average: " + str(self.avg))
 		print("\nZ-Score: " + str(self.zscore) + "\n")
 
