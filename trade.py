@@ -1,19 +1,26 @@
 import alpaca_trade_api as tradeapi
 from stock import Stock
+from datetime import datetime
+import pytz
 api = tradeapi.REST()
+name = 'APPL'
 
 
 def checkMarket():
 	clock = api.get_clock()
 	return clock.is_open
 
+def initStock():
+	return Stock(name)
+
 def main():
 
 	if (not checkMarket()):
-		print("\nMarket is currently closed, exiting.\n")
+		print("\nStock Market is currently closed, exiting.\n")
 		exit()
 
-	print("\nMarket is currently open\n")
+	print("\nStock Market is open\n")
+	stock = initStock()
 
 	while (checkMarket()):
 		print("\nMarket Open\n")
