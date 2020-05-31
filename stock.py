@@ -11,7 +11,8 @@ class Stock:
 		self.count  = 0
 
 	def printPrice(self):
-		print(self.name + ": " + str(self.price) + "\n")
+		print(self.name, ":     " + str(self.price), "              ",
+			 str(self.avg))
 
 	def printTrade(self, act):
 		print("\n" + act + " order for " + self.name + " at " + str(self.price))
