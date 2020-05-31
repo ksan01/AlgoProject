@@ -1,5 +1,5 @@
 import alpaca_trade_api as tradeapi
-
+from stock import Stock
 api = tradeapi.REST()
 
 
@@ -12,7 +12,7 @@ def main():
 	if (not checkMarket()):
 		print("\nMarket is currently closed, exiting.\n")
 		exit()
-		
+
 	print("\nMarket is currently open\n")
 
 	while (checkMarket()):
