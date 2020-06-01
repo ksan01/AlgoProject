@@ -5,17 +5,17 @@ import pytz
 #
 # name: ticker symbol of stock
 # price: last trade price of stock
-# avg: 1-hour moving average for stock
+# avg: 1-hour moving average of stock
 # zscore: z-score between price and avg
 # count: number of stocks in possesion
 #
 # printPrice: prints the ticker symbol, price, and 1-hour average of a single
-#             stock in a format matching a table
+#             stock in a table-like format
 #
 # printTrade: prints the trade order for a single stock, which includes the 
-#			  action(BUY/SELL), the ticker symbol of the stock, traded price,
+#			  action (BUY/SELL), the ticker symbol of the stock, traded price,
 #			  traded time, 1-hour moving average of the stock, and the z-score
-#			  between the stock's price and 1-hout moving average 
+#			  between the stock's price and 1-hour moving average 
 
 class Stock:
 
