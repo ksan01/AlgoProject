@@ -6,17 +6,17 @@ import pytz
 import statistics
 
 
-api = tradeapi.REST()
-symbol = 'AAPL'
-buy  = 'BUY'
-sell = 'SELL'
+API = tradeapi.REST()
+SYMBOL = 'AAPL'
+BUY  = 'BUY'
+SELL = 'SELL'
 
 def checkMarket():
-	clock = api.get_clock()
+	clock = API.get_clock()
 	return clock.is_open
 
 def initStock():
-	return Stock(symbol)
+	return Stock(SYMBOL)
 
 def printStock(stock):
 	tz = pytz.timezone('America/New_York') 
@@ -27,12 +27,12 @@ def printStock(stock):
 
 def getPrices(stock):
 	# get current price of the stock
-	last_trade  = api.get_last_trade(symbol)
+	last_trade  = API.get_last_trade(SYMBOL)
 	stock.price = last_trade.price 
 
 	# get closing prices for each minute in the last hour
-	barset      = api.get_barset(symbol, '1Min', limit=60)
-	bars        = barset[symbol]
+	barset      = API.get_barset(SYMBOL, '1Min', limit=60)
+	bars        = barset[SYMBOL]
 	prices      = [bar.c for bar in bars]
 	stock.avg   = round(statistics.mean(prices), 2)
 
