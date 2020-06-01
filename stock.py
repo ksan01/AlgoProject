@@ -11,13 +11,14 @@ class Stock:
 		self.count  = 0
 
 	def printPrice(self):
-		print(self.name, ":     ", self.price, "              ", self.avg)
+		print(self.name, "          ", self.price, "        ", self.avg)
 
 	def printTrade(self, act):
 		tz = pytz.timezone('America/New_York') 
-		time = datetime.now(tz).strftime("%H:%M:%S")
-		print("\n", act, "order for", self.name, "at",self.price, time)
-		print("Price: ", self.price)
-		print("1-hour Average: ", self.avg)
-		print("Z-Score: ", self.zscore)
+		time = datetime.now(tz).strftime("- %H:%M:%S")
+		print("\n\n" + act, "order for", self.name, "at",self.price, time)
+		print("-------------------------------------------")
+		print("Price:", self.price)
+		print("1-hour Average:", self.avg)
+		print("Z-Score:", self.zscore)
 
