@@ -1,6 +1,22 @@
 from datetime import datetime
 import pytz
 
+# Representation of a Stock object
+#
+# name: ticker symbol of stock
+# price: last trade price of stock
+# avg: 1-hour moving average for stock
+# zscore: z-score between price and avg
+# count: number of stocks in possesion
+#
+# printPrice: prints the ticker symbol, price, and 1-hour average of a single
+#             stock in a format matching a table
+#
+# printTrade: prints the trade order for a single stock, which includes the 
+#			  action(BUY/SELL), the ticker symbol of the stock, traded price,
+#			  traded time, 1-hour moving average of the stock, and the z-score
+#			  between the stock's price and 1-hout moving average 
+
 class Stock:
 
 	def __init__(self, name):
