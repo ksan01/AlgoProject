@@ -13,22 +13,28 @@ SELL = 'SELL'
 BUY_FACTOR = -1.0
 SELL_FACTOR = 1.0
 
-
+# Checks if the stock market is open
 def checkMarket():
 	clock = API.get_clock()
 	return clock.is_open
 
+# Initializes an empty stock object using ticker symbol as the name of the stock
 def initStock():
 	return Stock(SYMBOL)
 
+# Prints the current price and the 1-hour moving average of the stock
 def printStock(stock):
+
 	tz = pytz.timezone('America/New_York') 
 	time = datetime.now(tz).strftime("%H:%M:%S")
 	print("\n\n" + time, "    Current Price   1-hour Average")
 	print("-------------------------------------------")
 	stock.printPrice()
 
+# Gets the current price and 1-hour moving average of the stock. Computes the
+# z-score between the current price and 1-hour average of the stock
 def getPrices(stock):
+
 	# get current price of the stock
 	last_trade  = API.get_last_trade(SYMBOL)
 	stock.price = last_trade.price 
@@ -45,16 +51,25 @@ def getPrices(stock):
 	stock.zscore = (stock.price - stock.avg) / std
 	print(stock.zscore)
 
+# Executes BUY or SELL orders for the stock using the mean reversion strategy
 def trade(stock):
 
+	# if current price is greater than the 1-hour average by the amount of
+	# SELL_FACTOR standard deviations, which is the z-score, sell the stock
 	if (stock.zscore > SELL_FACTOR):
-		print(stock.zscore)
-		stock.printTrade(SELL)
+		if (stock.count > 0):
+			print(stock.zscore)
+			stock.printTrade(SELL)
+		else:
+			print("\nNo order for", stock.name, "\n")
 
+	# if current price is lesset than the 1-hour average by the amount of
+	# BUY_FACTOR standard deviations, which is the z-score, buy the stock
 	elif (stock.zscore < BUY_FACTOR):
 		print(stock.zscore)
 		stock.printTrade(BUY)
 
+	# No BUY or SELL orders if BUY_FACTOR < z-score < SELL_FACTOR
 	else:
 		print("\nNo order for", stock.name, "\n")
 
