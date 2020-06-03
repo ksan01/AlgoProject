@@ -30,6 +30,7 @@ def printStock(stock):
 	print("\n\n" + time, "    Current Price   1-hour Average")
 	print("-------------------------------------------")
 	stock.printPrice()
+	print("\n")
 
 # Gets the current price and 1-hour moving average of the stock. Computes the
 # z-score between the current price and 1-hour average of the stock
@@ -52,26 +53,36 @@ def getPrices(stock):
 	print(stock.zscore)
 
 # Executes BUY or SELL orders for the stock using the mean reversion strategy
-def trade(stock):
+def trade(stock, money):
 
 	# if current price is greater than the 1-hour average by the amount of
 	# SELL_FACTOR standard deviations, which is the z-score, sell the stock
 	if (stock.zscore > SELL_FACTOR):
-		if (stock.count > 0):
+		#if (stock.count > 0):
 			print(stock.zscore)
 			stock.printTrade(SELL)
-		else:
-			print("\nNo order for", stock.name, "\n")
+			money += stock.price
+			print("count before", stock.count)
+			stock.count -= 1
+			print("count after", stock.count)
+		#else:
+		#	print("\nNo order for", stock.name, "\n")
 
 	# if current price is lesset than the 1-hour average by the amount of
 	# BUY_FACTOR standard deviations, which is the z-score, buy the stock
 	elif (stock.zscore < BUY_FACTOR):
 		print(stock.zscore)
 		stock.printTrade(BUY)
+		money -= stock.price
+		print("count before", stock.count)
+		stock.count += 1
+		print("count after", stock.count)
 
-	# No BUY or SELL orders if BUY_FACTOR < z-score < SELL_FACTOR
+	# No BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
 	else:
 		print("\nNo order for", stock.name, "\n")
+
+	print("Current fund:", money, "\n")
 
 def main():
 	
@@ -81,11 +92,12 @@ def main():
 
 	print("\nStock Market is open, beginning trading\n")
 	stock = initStock()
+	money = 10000
 
 	while (checkMarket()):
 		getPrices(stock)
 		printStock(stock)
-		trade(stock)
+		money = trade(stock, money)
 
 		print("\nRefreshing...\n")
 		# TODO: change to 60s 
