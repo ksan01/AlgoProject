@@ -1,6 +1,7 @@
 import alpaca_trade_api as tradeapi
 from stock import Stock
 from datetime import datetime
+from datetime import date
 from time import sleep
 import pytz
 import statistics
@@ -39,21 +40,25 @@ def printStock(stock):
 # orders, the total number of SELL orders, the starting fund, the closing fund,
 # and the calculated return
 def printSummary(stock, money):
-	print("\n\nEND OF DAY SUMMARY |  BUYS   SELLS")
+
+	today = date.today()
+	print("\n\nEND OF DAY SUMMARY\n")
+	print(today.strftime("%d/%m/%Y"), "       BUYS    SELLS")
 	print("-------------------------------------------")
 	stock.printTradeSummary()
 	print("\nStarting Fund:", START)
 	print("Closing Fund:", money)
 	ratio = ((money - START) / START) * 100
-	print("Return:", str(round(ratio, 2)) + "%")
+	print("Return:", str(round(ratio, 2)) + "%", "\n")
 
 # Exits program if the current fund is up to 25% lower than the starting fund
-def checkLoss(money):
+def checkFund(money):
 
 	ratio = money / START
 	loss = ((money - START) / START) * 100
-	if (ratio <= 0.75):
-		print("\nLosses up to", str(round(loss, 2)) + "%", "exiting program.")
+	if (ratio <= 0.70):
+		print("\nALERT:", "Losses up to", 
+			str(round(loss, 2)) + "%", "exiting program.")
 		exit()
 
 # Gets the current price and 1-hour moving average of the stock. Computes the
@@ -61,14 +66,15 @@ def checkLoss(money):
 def getPrices(stock):
 
 	# get current price of the stock
-	last_trade  = API.get_last_trade(SYMBOL)
-	stock.price = last_trade.price 
+	#last_trade  = API.get_last_trade(SYMBOL)
+	#stock.price = last_trade.price 
 
 	# get closing prices for each minute in the last hour 
 	# to compute 1-hour moving average of the stock
 	barset      = API.get_barset(SYMBOL, '1Min', limit = PERIOD)
 	bars        = barset[SYMBOL]
 	prices      = [bar.c for bar in bars]
+	stock.price = prices[-1]
 	stock.avg   = round(statistics.mean(prices), 2)
 
 	# compute z-score
@@ -88,9 +94,7 @@ def trade(stock, money):
 			print(stock.zscore)
 			stock.printTradeOrder(SELL)
 			money += stock.price
-			print("count before", stock.count)
 			stock.count -= 1
-			print("count after", stock.count)
 			stock.sells += 1
 		else:
 			print("\nNo order for", stock.name, "\n")
@@ -101,9 +105,7 @@ def trade(stock, money):
 		print(stock.zscore)
 		stock.printTradeOrder(BUY)
 		money -= stock.price
-		print("count before", stock.count)
 		stock.count += 1
-		print("count after", stock.count)
 		stock.buys += 1
 
 	# No BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
@@ -127,11 +129,11 @@ def main():
 		getPrices(stock)
 		printStock(stock)
 		fund = trade(stock, fund)
-		checkLoss(fund)
+		checkFund(fund)
 
 		print("\nRefreshing...\n\n\n")
 		# TODO: change to 60s 
-		sleep(10)
+		sleep(60)
 
 	printSummary(stock, fund)
 
