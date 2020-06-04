@@ -44,10 +44,10 @@ class Stock:
 		print("-------------------------------------------")
 		print("Price:", self.price)
 		print("1-hour Average:", self.avg)
-		print("Z-Score:", self.zscore)
+		print("Z-Score:", round(self.zscore, 2))
 
 	def printTradeSummary(self):
-		print(self.name, "          ", self.buys, "        ", self.sells)
+		print(self.name, "     	  ", self.buys, "     ", self.sells)
 
 
 
