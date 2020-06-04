@@ -35,12 +35,25 @@ def printStock(stock):
 	stock.printPrice()
 	print("\n")
 
-# Exits program if the current fund up to 25% lower than the starting fund
+# Prints the summary of the trading session by printing the total number of BUY
+# orders, the total number of SELL orders, the starting fund, the closing fund,
+# and the calculated return
+def printSummary(stock, money):
+	print("\n\nEND OF DAY SUMMARY |  BUYS   SELLS")
+	print("-------------------------------------------")
+	stock.printTradeSummary()
+	print("\nStarting Fund:", START)
+	print("Closing Fund:", money)
+	ratio = ((money - START) / START) * 100
+	print("Return:", str(round(ratio, 2)) + "%")
+
+# Exits program if the current fund is up to 25% lower than the starting fund
 def checkLoss(money):
 
 	ratio = money / START
+	loss = ((money - START) / START) * 100
 	if (ratio <= 0.75):
-		print("\nLosses up to %25, exiting progam.")
+		print("\nLosses up to", str(round(loss, 2)) + "%", "exiting program.")
 		exit()
 
 # Gets the current price and 1-hour moving average of the stock. Computes the
@@ -78,6 +91,7 @@ def trade(stock, money):
 			print("count before", stock.count)
 			stock.count -= 1
 			print("count after", stock.count)
+			stock.sells += 1
 		else:
 			print("\nNo order for", stock.name, "\n")
 
@@ -90,6 +104,7 @@ def trade(stock, money):
 		print("count before", stock.count)
 		stock.count += 1
 		print("count after", stock.count)
+		stock.buys += 1
 
 	# No BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
 	else:
@@ -118,6 +133,7 @@ def main():
 		# TODO: change to 60s 
 		sleep(10)
 
+	printSummary(stock, fund)
 
 
 if __name__ == '__main__':
