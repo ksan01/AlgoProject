@@ -19,6 +19,9 @@ import pytz
 #				   price, traded time, 1-hour moving average of the stock, and 
 #				   the z-score between the stock's price and 1-hour moving 
 # 				   average 
+#
+# printTradeSummary: prints the ticker symbol, number of BUY orders, number of
+#		 		     SELL orders of a single stock in a table-like format
 
 class Stock:
 
@@ -42,3 +45,10 @@ class Stock:
 		print("Price:", self.price)
 		print("1-hour Average:", self.avg)
 		print("Z-Score:", self.zscore)
+
+	def printTradeSummary(self):
+		print(self.name, "          ", self.buys, "        ", self.sells)
+
+
+
+
