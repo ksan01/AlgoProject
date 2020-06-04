@@ -63,29 +63,29 @@ def getPrices(stock):
 	stock.zscore = (stock.price - stock.avg) / std
 	print(stock.zscore)
 
-# Executes BUY or SELL orders for the stock using the mean reversion strategy
+# Executes BUY or SELL orders for the stock using the mean reversion strategy.
+# Updates the fund and number of stocks in possession accordingly to these 
+# orders
 def trade(stock, money):
 
 	# if current price is greater than the 1-hour average by the amount of
 	# SELL_FACTOR standard deviations, which is the z-score, sell the stock
 	if (stock.zscore > SELL_FACTOR):
-		#if (stock.count > 0):
+		if (stock.count > 0):
 			print(stock.zscore)
 			stock.printTradeOrder(SELL)
 			money += stock.price
 			print("count before", stock.count)
 			stock.count -= 1
 			print("count after", stock.count)
-		#else:
-		#	print("\nNo order for", stock.name, "\n")
+		else:
+			print("\nNo order for", stock.name, "\n")
 
 	# if current price is lesset than the 1-hour average by the amount of
 	# BUY_FACTOR standard deviations, which is the z-score, buy the stock
 	elif (stock.zscore < BUY_FACTOR):
 		print(stock.zscore)
 		stock.printTradeOrder(BUY)
-		print(stock.price)
-		print(type(stock.price))
 		money -= stock.price
 		print("count before", stock.count)
 		stock.count += 1
