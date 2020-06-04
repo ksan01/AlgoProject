@@ -5,17 +5,20 @@ import pytz
 #
 # name: ticker symbol of stock
 # price: last trade price of stock
-# avg: 1-hour moving average of stock
+# avg:  moving average of stock
 # zscore: z-score between price and avg
 # count: number of stocks in possesion
+# buys: number of BUY orders for the stock
+# sells: number of SELL orders for the stock
 #
 # printPrice: prints the ticker symbol, price, and 1-hour average of a single
 #             stock in a table-like format
 #
-# printTrade: prints the trade order for a single stock, which includes the 
-#			  action (BUY/SELL), the ticker symbol of the stock, traded price,
-#			  traded time, 1-hour moving average of the stock, and the z-score
-#			  between the stock's price and 1-hour moving average 
+# printTradeOrder: prints the trade order for a single stock, which includes the 
+#			  	   action (BUY/SELL), the ticker symbol of the stock, traded 
+#				   price, traded time, 1-hour moving average of the stock, and 
+#				   the z-score between the stock's price and 1-hour moving 
+# 				   average 
 
 class Stock:
 
@@ -25,11 +28,13 @@ class Stock:
 		self.avg    = 0
 		self.zscore = 0
 		self.count  = 0
+		self.buys   = 0
+		self.sells  = 0
 
 	def printPrice(self):
 		print(self.name, "          ", self.price, "        ", self.avg)
 
-	def printTrade(self, act):
+	def printTradeOrder(self, act):
 		tz = pytz.timezone('America/New_York') 
 		time = datetime.now(tz).strftime("- %H:%M:%S")
 		print("\n\n" + act, "order for", self.name, "at",self.price, time)
@@ -37,4 +42,3 @@ class Stock:
 		print("Price:", self.price)
 		print("1-hour Average:", self.avg)
 		print("Z-Score:", self.zscore)
-
