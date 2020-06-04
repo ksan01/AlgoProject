@@ -10,8 +10,10 @@ API = tradeapi.REST()
 SYMBOL = 'AAPL'
 BUY  = 'BUY'
 SELL = 'SELL'
+PERIOD = 60
 BUY_FACTOR = -1.0
 SELL_FACTOR = 1.0
+START = 10000
 
 
 # Checks if the stock market is open
@@ -33,10 +35,10 @@ def printStock(stock):
 	stock.printPrice()
 	print("\n")
 
-# Checks if the current fund up to 25% lower than the starting fund
-def checkLoss(start, money):
+# Exits program if the current fund up to 25% lower than the starting fund
+def checkLoss(money):
 
-	ratio = money / start
+	ratio = money / START
 	if (ratio <= 0.75):
 		print("\nLosses up to %25, exiting progam.")
 		exit()
@@ -51,7 +53,7 @@ def getPrices(stock):
 
 	# get closing prices for each minute in the last hour 
 	# to compute 1-hour moving average of the stock
-	barset      = API.get_barset(SYMBOL, '1Min', limit=60)
+	barset      = API.get_barset(SYMBOL, '1Min', limit = PERIOD)
 	bars        = barset[SYMBOL]
 	prices      = [bar.c for bar in bars]
 	stock.avg   = round(statistics.mean(prices), 2)
@@ -104,16 +106,15 @@ def main():
 
 	print("\nStock Market is open, beginning trading\n")
 	stock = initStock()
-	fund = 10000
-	start = fund
+	fund = START
 
 	while (checkMarket()):
 		getPrices(stock)
 		printStock(stock)
 		fund = trade(stock, fund)
-		checkLoss(fund, start)
+		checkLoss(fund)
 
-		print("\nRefreshing...\n")
+		print("\nRefreshing...\n\n\n")
 		# TODO: change to 60s 
 		sleep(10)
 
