@@ -107,8 +107,6 @@ def main():
 	fund = 10000
 	start = fund
 
-	print("hey")
-
 	while (checkMarket()):
 		getPrices(stock)
 		printStock(stock)
