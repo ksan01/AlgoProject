@@ -13,6 +13,7 @@ SELL = 'SELL'
 BUY_FACTOR = -1.0
 SELL_FACTOR = 1.0
 
+
 # Checks if the stock market is open
 def checkMarket():
 	clock = API.get_clock()
@@ -31,6 +32,14 @@ def printStock(stock):
 	print("-------------------------------------------")
 	stock.printPrice()
 	print("\n")
+
+# Checks if the current fund up to 25% lower than the starting fund
+def checkLoss(start, money):
+
+	ratio = money / start
+	if (ratio <= 0.75):
+		print("\nLosses up to %25, exiting progam.")
+		exit()
 
 # Gets the current price and 1-hour moving average of the stock. Computes the
 # z-score between the current price and 1-hour average of the stock
@@ -60,7 +69,7 @@ def trade(stock, money):
 	if (stock.zscore > SELL_FACTOR):
 		#if (stock.count > 0):
 			print(stock.zscore)
-			stock.printTrade(SELL)
+			stock.printTradeOrder(SELL)
 			money += stock.price
 			print("count before", stock.count)
 			stock.count -= 1
@@ -72,7 +81,9 @@ def trade(stock, money):
 	# BUY_FACTOR standard deviations, which is the z-score, buy the stock
 	elif (stock.zscore < BUY_FACTOR):
 		print(stock.zscore)
-		stock.printTrade(BUY)
+		stock.printTradeOrder(BUY)
+		print(stock.price)
+		print(type(stock.price))
 		money -= stock.price
 		print("count before", stock.count)
 		stock.count += 1
@@ -83,6 +94,7 @@ def trade(stock, money):
 		print("\nNo order for", stock.name, "\n")
 
 	print("Current fund:", money, "\n")
+	return money
 
 def main():
 	
@@ -92,12 +104,16 @@ def main():
 
 	print("\nStock Market is open, beginning trading\n")
 	stock = initStock()
-	money = 10000
+	fund = 10000
+	start = fund
+
+	print("hey")
 
 	while (checkMarket()):
 		getPrices(stock)
 		printStock(stock)
-		money = trade(stock, money)
+		fund = trade(stock, fund)
+		checkLoss(fund, start)
 
 		print("\nRefreshing...\n")
 		# TODO: change to 60s 
