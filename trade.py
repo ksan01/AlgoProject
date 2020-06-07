@@ -69,8 +69,8 @@ def getPrices(stock):
 	#last_trade  = API.get_last_trade(SYMBOL)
 	#stock.price = last_trade.price 
 
-	# get closing prices for each minute in the last hour 
-	# to compute 1-hour moving average of the stock
+	# get closing prices for each minute in the last hour to compute 1-hour 
+	# moving average of the stock and get current price
 	barset      = API.get_barset(SYMBOL, '1Min', limit = PERIOD)
 	bars        = barset[SYMBOL]
 	prices      = [bar.c for bar in bars]
@@ -108,11 +108,11 @@ def trade(stock, money):
 		stock.count += 1
 		stock.buys += 1
 
-	# No BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
+	# no BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
 	else:
 		print("\nNo order for", stock.name, "\n")
 
-	print("Current fund:", money, "\n")
+	print("\nCurrent fund:", money, "\n")
 	return money
 
 def main():
