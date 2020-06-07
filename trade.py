@@ -80,7 +80,7 @@ def getPrices(stock):
 	# compute z-score
 	std = statistics.stdev(prices)
 	stock.zscore = (stock.price - stock.avg) / std
-	print(stock.zscore)
+	#print(stock.zscore)
 
 # Executes BUY or SELL orders for the stock using the mean reversion strategy.
 # Updates the fund and number of stocks in possession accordingly to these 
