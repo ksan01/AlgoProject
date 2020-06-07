@@ -1,27 +1,29 @@
 from datetime import datetime
 import pytz
 
-# Representation of a Stock object
-#
-# name: ticker symbol of stock
-# price: last trade price of stock
-# avg:  moving average of stock
-# zscore: z-score between price and avg
-# count: number of stocks in possesion
-# buys: number of BUY orders for the stock
-# sells: number of SELL orders for the stock
-#
-# printPrice: prints the ticker symbol, price, and 1-hour average of a single
-#             stock in a table-like format
-#
-# printTradeOrder: prints the trade order for a single stock, which includes the 
-#			  	   action (BUY/SELL), the ticker symbol of the stock, traded 
-#				   price, traded time, 1-hour moving average of the stock, and 
-#				   the z-score between the stock's price and 1-hour moving 
-# 				   average 
-#
-# printTradeSummary: prints the ticker symbol, number of BUY orders, number of
-#		 		     SELL orders of a single stock in a table-like format
+'''
+Representation of a Stock object
+
+ name: ticker symbol of stock
+ price: last trade price of stock
+ avg:  moving average of stock
+ zscore: z-score between price and avg
+ count: number of stocks in possesion
+ buys: number of BUY orders for the stock
+ sells: number of SELL orders for the stock
+
+ printPrice: prints the ticker symbol, price, and 1-hour average of a single
+             stock in a table-like format
+
+ printTradeOrder: prints the trade order for a single stock, which includes the 
+			  	  action (BUY/SELL), the ticker symbol of the stock, traded 
+				  price, traded time, 1-hour moving average of the stock, and 
+				  the z-score between the stock's price and 1-hour moving 
+ 			   average 
+
+ printTradeSummary: prints the ticker symbol, number of BUY orders, number of
+		     	    SELL orders of a single stock in a table-like format
+'''
 
 class Stock:
 
