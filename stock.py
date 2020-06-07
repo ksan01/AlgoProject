@@ -19,7 +19,7 @@ Representation of a Stock object
 			  	  action (BUY/SELL), the ticker symbol of the stock, traded 
 				  price, traded time, 1-hour moving average of the stock, and 
 				  the z-score between the stock's price and 1-hour moving 
- 			   average 
+ 			      average 
 
  printTradeSummary: prints the ticker symbol, number of BUY orders, number of
 		     	    SELL orders of a single stock in a table-like format
