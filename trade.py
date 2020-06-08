@@ -47,7 +47,7 @@ def printSummary(stock, money):
 	print("-------------------------------------------")
 	stock.printTradeSummary()
 	print("\nStarting Fund:", START)
-	print("Closing Fund:", money)
+	print("Closing Fund:", round(money, 3))
 	ratio = ((money - START) / START) * 100
 	print("Return:", str(round(ratio, 2)) + "%", "\n")
 
@@ -80,7 +80,7 @@ def getPrices(stock):
 	# compute z-score
 	std = statistics.stdev(prices)
 	stock.zscore = (stock.price - stock.avg) / std
-	#print(stock.zscore)
+	print(stock.zscore)
 
 # Executes BUY or SELL orders for the stock using the mean reversion strategy.
 # Updates the fund and number of stocks in possession accordingly to these 
@@ -112,7 +112,7 @@ def trade(stock, money):
 	else:
 		print("\nNo order for", stock.name, "\n")
 
-	print("\nCurrent fund:", money, "\n")
+	print("\nCurrent fund:", round(money, 3), "\n")
 	return money
 
 def main():
