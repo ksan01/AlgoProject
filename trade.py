@@ -66,10 +66,6 @@ def checkFund(money):
 # z-score between the current price and 1-hour average of the stock
 def getPrices(stock):
 
-	# get current price of the stock
-	#last_trade  = API.get_last_trade(SYMBOL)
-	#stock.price = last_trade.price 
-
 	# get closing prices for each minute in the last hour to compute 1-hour 
 	# moving average of the stock and get current price
 	barset      = API.get_barset(SYMBOL, '1Min', limit = PERIOD)
@@ -97,16 +93,21 @@ def trade(stock, money):
 			stock.count -= 1
 			stock.sells += 1
 		else:
-			print("\nNo order for", stock.name, ", no stocks in possession\n")
+			print("\nNo order for", stock.name + ", no stock to execute" + 
+				" SELL order\n")
 
 	# if current price is lesset than the 1-hour average by the amount of
 	# BUY_FACTOR standard deviations, which is the z-score, buy the stock
 	elif (stock.zscore < BUY_FACTOR):
-		# TO DO: add condition buy only money >= START / 2
-		stock.printTradeOrder(BUY)
-		money -= stock.price
-		stock.count += 1
-		stock.buys += 1
+		# do not execute a BUY order if current fund has decreased 50%
+		if (money > (START / 2) ):
+			stock.printTradeOrder(BUY)
+			money -= stock.price
+			stock.count += 1
+			stock.buys += 1
+		else:
+			print("\nNo order for", stock.name + "Low fund to execute" +
+				"BUY order\n")
 
 	# no BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
 	else:
