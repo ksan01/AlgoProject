@@ -1,7 +1,6 @@
 import alpaca_trade_api as tradeapi
 from stock import Stock
-from datetime import datetime
-from datetime import date
+from datetime import datetime, date
 from time import sleep
 import pytz
 import statistics
@@ -43,7 +42,7 @@ def printSummary(stock, money):
 
 	today = date.today()
 	print("\n\nEND OF DAY SUMMARY\n")
-	print(today.strftime("%d/%m/%Y"), "       BUYS    SELLS")
+	print(today.strftime("%m/%d/%Y"), "       BUYS    SELLS")
 	print("-------------------------------------------")
 	stock.printTradeSummary()
 	print("\nStarting Fund:", START)
@@ -51,14 +50,16 @@ def printSummary(stock, money):
 	ratio = ((money - START) / START) * 100
 	print("Return:", str(round(ratio, 2)) + "%", "\n")
 
-# Exits program if the current fund is up to 25% lower than the starting fund
+# Exits program if the current fund is up to 30% lower than the starting fund
 def checkFund(money):
 
 	ratio = money / START
 	loss = ((money - START) / START) * 100
+	tz = pytz.timezone('America/New_York') 
+	time = datetime.now(tz).strftime("%H:%M:%S")
 	if (ratio <= 0.70):
-		print("\nALERT:", "Losses up to", 
-			str(round(loss, 2)) + "%", "exiting program.")
+		print("\n" + time, "\nALERT:", "Losses up to", 
+			str(round(loss, 2)) + "%,", "exiting program.\n")
 		exit()
 
 # Gets the current price and 1-hour moving average of the stock. Computes the
@@ -75,12 +76,12 @@ def getPrices(stock):
 	bars        = barset[SYMBOL]
 	prices      = [bar.c for bar in bars]
 	stock.price = prices[-1]
-	stock.avg   = round(statistics.mean(prices), 2)
+	stock.avg   = round(statistics.mean(prices), 3)
 
 	# compute z-score
 	std = statistics.stdev(prices)
 	stock.zscore = (stock.price - stock.avg) / std
-	print(stock.zscore)
+	#print(stock.zscore)
 
 # Executes BUY or SELL orders for the stock using the mean reversion strategy.
 # Updates the fund and number of stocks in possession accordingly to these 
@@ -91,18 +92,17 @@ def trade(stock, money):
 	# SELL_FACTOR standard deviations, which is the z-score, sell the stock
 	if (stock.zscore > SELL_FACTOR):
 		if (stock.count > 0):
-			print(stock.zscore)
 			stock.printTradeOrder(SELL)
 			money += stock.price
 			stock.count -= 1
 			stock.sells += 1
 		else:
-			print("\nNo order for", stock.name, "\n")
+			print("\nNo order for", stock.name, ", no stocks in possession\n")
 
 	# if current price is lesset than the 1-hour average by the amount of
 	# BUY_FACTOR standard deviations, which is the z-score, buy the stock
 	elif (stock.zscore < BUY_FACTOR):
-		print(stock.zscore)
+		# TO DO: add condition buy only money >= START / 2
 		stock.printTradeOrder(BUY)
 		money -= stock.price
 		stock.count += 1
@@ -115,10 +115,12 @@ def trade(stock, money):
 	print("\nCurrent fund:", round(money, 3), "\n")
 	return money
 
+
+
 def main():
-	
+
 	if (not checkMarket()):
-		print("\nStock Market is currently closed, exiting.")
+		print("\nStock Market is currently closed, exiting.\n")
 		exit()
 
 	print("\nStock Market is open, beginning trading\n")
@@ -129,10 +131,9 @@ def main():
 		getPrices(stock)
 		printStock(stock)
 		fund = trade(stock, fund)
-		checkFund(fund)
+		#checkFund(fund)
 
 		print("\nRefreshing...\n\n\n")
-		# TODO: change to 60s 
 		sleep(60)
 
 	printSummary(stock, fund)
