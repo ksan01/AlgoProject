@@ -93,25 +93,25 @@ def trade(stock, money):
 			stock.count -= 1
 			stock.sells += 1
 		else:
-			print("\nNo order for", stock.name + ", no stock to execute" + 
-				" SELL order\n")
+			print("\nNo positions for", stock.name + ", no stock to execute", 
+				"SELL order\n")
 
 	# if current price is lesset than the 1-hour average by the amount of
 	# BUY_FACTOR standard deviations, which is the z-score, buy the stock
 	elif (stock.zscore < BUY_FACTOR):
-		# do not execute a BUY order if current fund has decreased 50%
-		if (money > (START / 2) ):
+		# do not execute a BUY order if current fund has decreased by 50%
+		if (money > (START / 2)):
 			stock.printTradeOrder(BUY)
 			money -= stock.price
 			stock.count += 1
 			stock.buys += 1
 		else:
-			print("\nNo order for", stock.name + "Low fund to execute" +
+			print("\nNo positions for", stock.name + ", low fund to execute",
 				"BUY order\n")
 
 	# no BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
 	else:
-		print("\nNo order for", stock.name, "\n")
+		print("\nNo positions for", stock.name, "\n")
 
 	print("\nCurrent fund:", round(money, 3), "\n")
 	return money
