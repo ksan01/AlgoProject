@@ -1,7 +1,7 @@
 # Simple Mean Reversion Trading Program
 
 *Kerem San* 
-<br/>
+<br/><br/>
 
 An automated trading bot using a simple mean reversion trading strategy.
 
