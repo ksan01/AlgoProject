@@ -2,7 +2,7 @@
 
 *Kerem San* 
 &nbsp;
-
+&nbsp;
 
 An automated trading bot using a simple mean reversion trading strategy.
 
