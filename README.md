@@ -7,7 +7,7 @@ An automated trading bot using a simple mean reversion trading strategy.
 
 **Disclaimer:** This program is not a fully developed trading bot that 
 promises or attempts to generate positive returns every single trading 
-session. The sole purpose of this programs is for me to get practice 
+session. The sole purpose of this program is for me to get practice 
 translating a simple trading strategy into code and gain experience 
 with algorithmic trading.
 
