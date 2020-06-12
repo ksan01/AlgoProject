@@ -1,10 +1,10 @@
 # Simple Mean Reversion Trading Program
 
-Kerem San
-
-
+*Kerem San*
 
 An automated trading bot using a simple mean reversion trading strategy.
+
+Curent version: Trading a single stock (AAPL)
 
 ## The Algorithm
 
