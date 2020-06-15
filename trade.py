@@ -21,9 +21,11 @@ def checkMarket():
 	clock = API.get_clock()
 	return clock.is_open
 
+
 # Initializes an empty stock object using ticker symbol as the name of the stock
 def initStock():
 	return Stock(SYMBOL)
+
 
 # Prints the current price and the 1-hour moving average of the stock
 def printStock(stock):
@@ -34,6 +36,7 @@ def printStock(stock):
 	print("-------------------------------------------")
 	stock.printPrice()
 	print("\n")
+
 
 # Prints the summary of the trading session by printing the total number of BUY
 # orders, the total number of SELL orders, the starting fund, the closing fund,
@@ -50,17 +53,6 @@ def printSummary(stock, money):
 	ratio = ((money - START) / START) * 100
 	print("Return:", str(round(ratio, 2)) + "%", "\n")
 
-# Exits program if the current fund is up to 30% lower than the starting fund
-def checkFund(money):
-
-	ratio = money / START
-	loss = ((money - START) / START) * 100
-	tz = pytz.timezone('America/New_York') 
-	time = datetime.now(tz).strftime("%H:%M:%S")
-	if (ratio <= 0.70):
-		print("\n" + time, "\nALERT:", "Losses up to", 
-			str(round(loss, 2)) + "%,", "exiting program.\n")
-		exit()
 
 # Gets the current price and 1-hour moving average of the stock. Computes the
 # z-score between the current price and 1-hour average of the stock
@@ -78,6 +70,7 @@ def getPrices(stock):
 	std = statistics.stdev(prices)
 	stock.zscore = (stock.price - stock.avg) / std
 	#print(stock.zscore)
+
 
 # Executes BUY or SELL orders for the stock using the mean reversion strategy.
 # Updates the fund and number of stocks in possession accordingly to these 
@@ -118,6 +111,8 @@ def trade(stock, money):
 
 
 
+
+
 def main():
 
 	if (not checkMarket()):
@@ -132,7 +127,6 @@ def main():
 		getPrices(stock)
 		printStock(stock)
 		fund = trade(stock, fund)
-		#checkFund(fund)
 
 		print("\nRefreshing...\n\n\n")
 		sleep(60)
