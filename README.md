@@ -3,7 +3,7 @@
 *Kerem San* 
 <br/><br/>
 
-An automated trading bot using a simple mean reversion trading strategy.
+An automated trading bot that trades stocks using a mean reversion trading strategy.
 
 **Disclaimer:** This program is not a fully developed trading bot that 
 promises or attempts to generate positive returns every single trading 
