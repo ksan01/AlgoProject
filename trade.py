@@ -7,14 +7,13 @@ import statistics
 
 
 API = tradeapi.REST()
-SYMBOL = 'AAPL'
 SYMBOLS = ['AAPL', 'MSFT', 'WMT', 'JNJ', 'CVX']
 BUY  = 'BUY'
 SELL = 'SELL'
 PERIOD = 60
 BUY_FACTOR = -1.0
 SELL_FACTOR = 1.0
-START = 10000
+START = 50000
 
 
 # Checks if the stock market is open
@@ -28,6 +27,7 @@ def initStocks():
 	stocks = [Stock(sym) for sym in SYMBOLS]
 	return stocks
 
+# Prints the symbols of each stock in the portfolio
 def printPortfolio(stocks):
 	print("\nMy Portfolio")
 	print("-------------------------------------------")
@@ -50,13 +50,15 @@ def printStocks(stocks):
 # Prints the summary of the trading session by printing the total number of BUY
 # orders, the total number of SELL orders, the starting fund, the closing fund,
 # and the calculated return
-def printSummary(stock, money):
+def printSummary(stocks, money):
 
 	today = date.today()
 	print("\n\nEND OF DAY SUMMARY\n")
 	print(today.strftime("%m/%d/%Y"), "       BUYS    SELLS")
 	print("-------------------------------------------")
-	stock.printTradeSummary()
+	for stock in stocks:
+		stock.printTradeSummary()
+
 	print("\nStarting Fund:", START)
 	print("Closing Fund:", round(money, 3))
 	ratio = ((money - START) / START) * 100
@@ -80,52 +82,47 @@ def getPrices(stocks):
 		std = statistics.stdev(prices)
 		stock.zscore = (stock.price - stock.avg) / std
 
-# Executes BUY or SELL orders for the stock using the mean reversion strategy.
-# Updates the fund, the number of stocks in possession, the number of BUY and 
-# SELL orders for the stock accordingly 
-def trade(stock, money):
+# Executes BUY or SELL orders for each stock in portfolio using the mean 
+# reversion strategy. Updates the fund, the number of stocks in possession, the
+# number of BUY and SELL orders for the stocks accordingly 
+def trade(stocks, money):
 
-	# if current price is greater than the 1-hour average by the amount of
-	# SELL_FACTOR standard deviations, which is the z-score, sell the stock
-	if (stock.zscore > SELL_FACTOR):
-		if (stock.count > 0):
-			stock.printTradeOrder(SELL)
-			money += stock.price
-			stock.count -= 1
-			stock.sells += 1
+	for stock in stocks:
+
+		# if current price is greater than the 1-hour average by the amount of
+		# SELL_FACTOR standard deviations, which is the z-score, sell the stock
+		if (stock.zscore > SELL_FACTOR):
+			if (stock.count > 0):
+				stock.printTradeOrder(SELL)
+				money += stock.price
+				stock.count -= 1
+				stock.sells += 1
+			else:
+				print("\nNo order for", stock.name + ", no stock to execute", 
+					"SELL order\n")
+
+		# if current price is lesset than the 1-hour average by the amount of
+		# BUY_FACTOR standard deviations, which is the z-score, buy the stock
+		elif (stock.zscore < BUY_FACTOR):
+			# do not execute a BUY order if the order will decrease the fund by 30%
+			if ((money - stock.price) > (START * 0.7)):
+				stock.printTradeOrder(BUY)
+				money -= stock.price
+				stock.count += 1
+				stock.buys += 1
+			else:
+				print("\nNo order for", stock.name + ", low fund to execute",
+					"BUY order\n")
+
+		# no BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
 		else:
-			print("\nNo order for", stock.name + ", no stock to execute", 
-				"SELL order\n")
-
-	# if current price is lesset than the 1-hour average by the amount of
-	# BUY_FACTOR standard deviations, which is the z-score, buy the stock
-	elif (stock.zscore < BUY_FACTOR):
-		# do not execute a BUY order if the order will decrease the fund by 50%
-		if ((money - stock.price) > (START / 2)):
-			stock.printTradeOrder(BUY)
-			money -= stock.price
-			stock.count += 1
-			stock.buys += 1
-		else:
-			print("\nNo order for", stock.name + ", low fund to execute",
-				"BUY order\n")
-
-	# no BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
-	else:
-		print("\nNo order for", stock.name, "\n")
+			print("\nNo order for", stock.name, "\n")
 
 	print("\nCurrent fund:", round(money, 3), "\n")
 	return money
 
 
-
-
 def main():
-
-	stocks = initStocks()
-	printPortfolio(stocks)
-	getPrices(stocks)
-	printStocks(stocks)
 
 	if (not checkMarket()):
 		print("\nStock Market is currently closed, exiting.\n")
@@ -137,14 +134,14 @@ def main():
 	fund = START
 
 	while (checkMarket()):
-		getPrices(stock)
-		printStocks(stock)
-		fund = trade(stock, fund)
+		getPrices(stocks)
+		printStocks(stocks)
+		fund = trade(stocks, fund)
 
 		print("\nRefreshing...\n\n\n")
 		sleep(60)
 
-	printSummary(stock, fund)
+	printSummary(stocks, fund)
 
 
 if __name__ == '__main__':
