@@ -48,8 +48,8 @@ def printStocks(stocks):
 	print("\n")
 
 # Prints the summary of the trading session by printing the total number of BUY
-# orders, the total number of SELL orders, the starting fund, the closing fund,
-# and the calculated return
+# orders and the total number of SELL orders for each stock. Prints the starting 
+# fund, the closing fund, and the calculated return
 def printSummary(stocks, money):
 
 	today = date.today()
@@ -89,8 +89,8 @@ def trade(stocks, money):
 
 	for stock in stocks:
 
-		# if current price is greater than the 1-hour average by the amount of
-		# SELL_FACTOR standard deviations, which is the z-score, sell the stock
+		# if the z-score between the current price and 1-hour average of the 
+		# stocks is over the SELL_FACTOR, execute SELL order
 		if (stock.zscore > SELL_FACTOR):
 			if (stock.count > 0):
 				stock.printTradeOrder(SELL)
@@ -101,8 +101,8 @@ def trade(stocks, money):
 				print("\nNo order for", stock.name + ", no stock to execute", 
 					"SELL order\n")
 
-		# if current price is lesset than the 1-hour average by the amount of
-		# BUY_FACTOR standard deviations, which is the z-score, buy the stock
+		# if the z-score between the current price and 1-hour average of the 
+		# stocks is under the BUY_FACTOR, execute BUY order
 		elif (stock.zscore < BUY_FACTOR):
 			# do not execute a BUY order if the order will decrease the fund by 30%
 			if ((money - stock.price) > (START * 0.7)):
