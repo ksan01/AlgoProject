@@ -5,7 +5,7 @@ import pytz
 Representation of a Stock object
 
  name: ticker symbol of stock
- price: last trade price of stock
+ price: current price of stock
  avg:  moving average of stock
  zscore: z-score between price and avg
  count: number of stocks in possesion
@@ -13,7 +13,8 @@ Representation of a Stock object
  sells: number of SELL orders for the stock
 
  printPrice: prints the ticker symbol, price, and 1-hour average of a single
-             stock in a table-like format
+             stock so that the printed variables are justified properly to
+             print a nicely aligned table 
 
  printTradeOrder: prints the trade order for a single stock, which includes the 
 			  	  action (BUY/SELL), the ticker symbol of the stock, traded 
@@ -22,7 +23,8 @@ Representation of a Stock object
  			      average 
 
  printTradeSummary: prints the ticker symbol, number of BUY orders, number of
-		     	    SELL orders of a single stock in a table-like format
+		     	    SELL orders of a single stock so that the printed variables 
+		     	    are justified properly to print a nicely aligned table 
 '''
 
 class Stock:
@@ -37,7 +39,8 @@ class Stock:
 		self.sells  = 0
 
 	def printPrice(self):
-		print(self.name, "          ", self.price, "        ", self.avg)
+		print(self.name.ljust(4), "       ", str(self.price).ljust(6),  
+			"       ", str(self.avg).ljust(6))
 
 	def printTradeOrder(self, act):
 		tz = pytz.timezone('America/New_York') 
@@ -46,10 +49,13 @@ class Stock:
 		print("-------------------------------------------")
 		print("Price:", self.price)
 		print("1-hour Average:", self.avg)
-		print("Z-Score:", round(self.zscore, 2))
+		print("Z-Score:", round(self.zscore, 3))
 
 	def printTradeSummary(self):
-		print(self.name, "     	  ", self.buys, "     ", self.sells)
+		print(self.name.ljust(4), "     	  ", str(self.buys).ljust(2)
+			, "    ", str(self.sells).ljust(2))
+
+
 
 
 
