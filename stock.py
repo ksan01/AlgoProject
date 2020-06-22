@@ -39,8 +39,8 @@ class Stock:
 		self.sells  = 0
 
 	def printPrice(self):
-		print(self.name.ljust(4), "       ", str(self.price).ljust(6),  
-			"       ", str(self.avg).ljust(6))
+		print(self.name.ljust(4), "         ", str(self.price).ljust(6),  
+			"         ", str(self.avg).ljust(6))
 
 	def printTradeOrder(self, act):
 		tz = pytz.timezone('America/New_York') 
