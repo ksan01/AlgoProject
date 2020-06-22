@@ -8,6 +8,7 @@ import statistics
 
 API = tradeapi.REST()
 SYMBOL = 'AAPL'
+SYMBOLS = ['AAPL', 'MSFT', 'WMT', 'JNJ', 'CVX']
 BUY  = 'BUY'
 SELL = 'SELL'
 PERIOD = 60
@@ -21,18 +22,29 @@ def checkMarket():
 	clock = API.get_clock()
 	return clock.is_open
 
-# Initializes an empty stock object using ticker symbol as the name of the stock
-def initStock():
-	return Stock(SYMBOL)
+# Initializes the portfolio by creating an array of empty stock objects for the
+# stocks in portfolio, using their ticker symbols as the names of the stock
+def initStocks():
+	stocks = [Stock(sym) for sym in SYMBOLS]
+	return stocks
 
-# Prints the current price and the 1-hour moving average of the stock
-def printStock(stock):
+def printPortfolio(stocks):
+	print("\nMy Portfolio")
+	print("-------------------------------------------")
+	for s in stocks:
+		print(s.name)
+	print("\n")
+
+# Prints the current prices and the 1-hour moving averages of the stocks in 
+# portfolio
+def printStocks(stocks):
 
 	tz = pytz.timezone('America/New_York') 
 	time = datetime.now(tz).strftime("%H:%M:%S")
 	print("\n\n" + time, "    Current Price   1-hour Average")
 	print("-------------------------------------------")
-	stock.printPrice()
+	for stock in stocks:
+		stock.printPrice()
 	print("\n")
 
 # Prints the summary of the trading session by printing the total number of BUY
@@ -50,21 +62,23 @@ def printSummary(stock, money):
 	ratio = ((money - START) / START) * 100
 	print("Return:", str(round(ratio, 2)) + "%", "\n")
 
-# Gets the current price and 1-hour moving average of the stock. Computes the
-# z-score between the current price and 1-hour average of the stock
-def getPrices(stock):
+# Gets the current prices and 1-hour moving averages of each stock in portfolio
+# Computes the z-score between the current price and 1-hour average of each stock
+def getPrices(stocks):
 
-	# get closing prices for each minute in the last hour to compute 1-hour 
-	# moving average of the stock and get current price
-	barset      = API.get_barset(SYMBOL, '1Min', limit = PERIOD)
-	bars        = barset[SYMBOL]
-	prices      = [bar.c for bar in bars]
-	stock.price = prices[-1]
-	stock.avg   = round(statistics.mean(prices), 3)
+	for stock in stocks:
+		# get closing prices for each minute in the last hour to compute 1-hour 
+		# moving average of the stock and get current price
+		symbol      = stock.name
+		barset      = API.get_barset(symbol, '1Min', limit = PERIOD)
+		bars        = barset[symbol]
+		prices      = [bar.c for bar in bars]
+		stock.price = prices[-1]
+		stock.avg   = round(statistics.mean(prices), 3)
 
-	# compute z-score
-	std = statistics.stdev(prices)
-	stock.zscore = (stock.price - stock.avg) / std
+		# compute z-score
+		std = statistics.stdev(prices)
+		stock.zscore = (stock.price - stock.avg) / std
 
 # Executes BUY or SELL orders for the stock using the mean reversion strategy.
 # Updates the fund, the number of stocks in possession, the number of BUY and 
@@ -108,17 +122,23 @@ def trade(stock, money):
 
 def main():
 
+	stocks = initStocks()
+	printPortfolio(stocks)
+	getPrices(stocks)
+	printStocks(stocks)
+
 	if (not checkMarket()):
 		print("\nStock Market is currently closed, exiting.\n")
 		exit()
 
 	print("\nStock Market is open, beginning trading\n")
-	stock = initStock()
+	stocks = initStocks()
+	printPortfolio(stocks)
 	fund = START
 
 	while (checkMarket()):
 		getPrices(stock)
-		printStock(stock)
+		printStocks(stock)
 		fund = trade(stock, fund)
 
 		print("\nRefreshing...\n\n\n")
