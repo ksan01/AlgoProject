@@ -19,8 +19,9 @@ with algorithmic trading.
 
 ## The Algorithm
 
+For each stock in the portfolio;
 - Gets current stock price each minute
-- Updates 1-hour moving average of stock each minute
+- Updates 1-hour moving average of the stock each minute
 - Compares current price to moving average by computing z-score.
 - If z-score is greater than 1, meaning that the current price is above
   the moving average by at least one standard deviation, executes a SELL order
