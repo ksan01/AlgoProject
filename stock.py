@@ -39,8 +39,8 @@ class Stock:
 		self.sells  = 0
 
 	def printPrice(self):
-		print(self.name.ljust(4), "         ", str(self.price).ljust(6),  
-			"         ", str(self.avg).ljust(6))
+		print(self.name.ljust(4), "         ", str(self.price).ljust(7),  
+			"         ", str(self.avg).ljust(7))
 
 	def printTradeOrder(self, act):
 		tz = pytz.timezone('America/New_York') 
@@ -49,11 +49,11 @@ class Stock:
 		print("-------------------------------------------")
 		print("Price:", self.price)
 		print("1-hour Average:", self.avg)
-		print("Z-Score:", round(self.zscore, 3))
+		print("Z-Score:", round(self.zscore, 3), "\n")
 
 	def printTradeSummary(self):
-		print(self.name.ljust(4), "     	  ", str(self.buys).ljust(2)
-			, "    ", str(self.sells).ljust(2))
+		print(self.name.ljust(4), "     	  ", str(self.buys).ljust(3)
+			, "    ", str(self.sells).ljust(3))
 
 
 
