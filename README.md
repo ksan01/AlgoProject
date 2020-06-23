@@ -11,7 +11,7 @@ session. The sole purpose of this program is for me to get practice
 translating a simple trading strategy into code and gain experience 
 with algorithmic trading.
 
-**The Portfolio**
+## The Portfolio
 - 2 Technology stocks: AAPL (Apple Inc), MSFT (Microsoft Corporation)
 - 1 Consumer Staples stock: WMT (Walmart Inc)
 - 1 Healthcare stock: JNJ (Johnson & Johnson)
