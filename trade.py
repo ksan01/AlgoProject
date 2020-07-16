@@ -82,14 +82,12 @@ def getPrices(stocks):
 		std = statistics.stdev(prices)
 		stock.zscore = (stock.price - stock.avg) / std
 
-# Check if the current price of the stock is good to sell by checking whether 
-# it is higher than the price it has been bought
-def checkSellPrice(sell_price, bought_list)
+# Checks if the stock has been indeed bought at a lower price than the 
+# price at which it is about to be sold, which is sell_price.
+def checkSellPrice(sell_price, bought_list):
 	
 	for price in bought_list:
 		if (sell_price > price):
-			# remove the price from price list of bought stocks
-			bought_list.remove(price)
 			return True
 
 	return False
@@ -105,11 +103,12 @@ def trade(stocks, money):
 		# stocks is over the SELL_FACTOR, execute SELL order
 		if (stock.zscore > SELL_FACTOR):
 			if (stock.count > 0):
-				if (checkSellPrice(stock.price, stock.boughtStocks)):
-					stock.printTradeOrder(SELL)
+				if (checkSellPrice(stock.price, stock.bought)):
+					stock.printTradeOrder(SELL, buyPrice)
 					money += stock.price
 					stock.count -= 1
 					stock.sells += 1
+					stock.bought.remove(stock.price)
 				else:
 					print("\nNo order for", stock.name, "\n")
 			else:
@@ -125,7 +124,7 @@ def trade(stocks, money):
 				money -= stock.price
 				stock.count += 1
 				stock.buys += 1
-				stock.boughtStocks.append(stock.price)
+				stock.bought.append(stock.price)
 			else:
 				print("\nNo order for", stock.name + ", low fund to execute",
 					"BUY order\n")
