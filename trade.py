@@ -82,12 +82,14 @@ def getPrices(stocks):
 		std = statistics.stdev(prices)
 		stock.zscore = (stock.price - stock.avg) / std
 
-# Check if the current price of the stock is good to sell by checking that 
-# whether it is higher than the price it has been bought
-def checkSellPrice(sell_price, price_list)
+# Check if the current price of the stock is good to sell by checking whether 
+# it is higher than the price it has been bought
+def checkSellPrice(sell_price, bought_list)
 	
-	for price in price_list:
+	for price in bought_list:
 		if (sell_price > price):
+			# remove the price from price list of bought stocks
+			bought_list.remove(price)
 			return True
 
 	return False
