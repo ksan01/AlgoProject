@@ -11,10 +11,10 @@ Representation of a Stock object
  count: number of stocks in possesion
  buys: number of BUY orders for the stock
  sells: number of SELL orders for the stock
- boughtStocks: a list holding the prices that the stock has been bought. This 
- 			   attribute was added to keep track of buy prices of the stocks as 
- 			   the mean reversion algorithm can sometimes cause the program to 
- 			   sell the stock at a lower price than it has been bought.
+ bought: a list holding the prices that the stock has been bought. This 
+ 	     attribute was added to keep track of buy prices of the stocks as 
+    	 the mean reversion algorithm can sometimes cause the program to 
+ 	     sell the stock at a lower price than it has been bought.
 
 
  printPrice: prints the ticker symbol, price, and 1-hour average of a single
@@ -42,7 +42,7 @@ class Stock:
 		self.count  = 0
 		self.buys   = 0
 		self.sells  = 0
-		self.boughtStocks = []
+		self.bought = []
 
 	def printPrice(self):
 		print(self.name.ljust(4), "         ", str(self.price).ljust(8),  
