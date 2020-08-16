@@ -7,7 +7,7 @@ import statistics
 
 
 API = tradeapi.REST()
-SYMBOLS = ['AAPL', 'MSFT', 'TSLA', 'GOOG', 'FB']
+SYMBOLS = ['AAPL', 'MSFT', 'WMT', 'JNJ', 'CVX']
 BUY  = 'BUY'
 SELL = 'SELL'
 LINE = "-------------------------------------------"
