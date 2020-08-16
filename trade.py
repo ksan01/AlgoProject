@@ -88,6 +88,7 @@ def checkSellPrice(sell_price, bought_list):
 	
 	for price in bought_list:
 		if (sell_price > price):
+			bought_list.remove(price)
 			return True
 
 	return False
@@ -104,13 +105,12 @@ def trade(stocks, money):
 		if (stock.zscore > SELL_FACTOR):
 			if (stock.count > 0):
 				if (checkSellPrice(stock.price, stock.bought)):
-					stock.printTradeOrder(SELL, buyPrice)
+					stock.printTradeOrder(SELL)
 					money += stock.price
 					stock.count -= 1
 					stock.sells += 1
-					stock.bought.remove(stock.price)
 				else:
-					print("\nNo order for", stock.name, "\n")
+					print("\nPRICE CLASH - No order for", stock.name, "\n")
 			else:
 				print("\nNo order for", stock.name + ", no stock to execute", 
 					"SELL order\n")
