@@ -7,9 +7,10 @@ import statistics
 
 
 API = tradeapi.REST()
-SYMBOLS = ['AAPL', 'MSFT', 'WMT', 'JNJ', 'CVX']
+SYMBOLS = ['AAPL', 'MSFT', 'TSLA', 'GOOG', 'FB']
 BUY  = 'BUY'
 SELL = 'SELL'
+LINE = "-------------------------------------------"
 PERIOD = 60
 BUY_FACTOR = -1.0
 SELL_FACTOR = 1.0
@@ -30,7 +31,7 @@ def initPortfolio():
 # Prints the symbols of each stock in the portfolio, and prints the starting fund
 def printPortfolio(stocks):
 	print("\nMy Portfolio")
-	print("-------------------------------------------")
+	print(LINE)
 	for stock in stocks:
 		print(stock.name)
 	print("\nStarting fund:", START, "\n")
@@ -42,7 +43,7 @@ def printPrices(stocks):
 	tz = pytz.timezone('America/New_York') 
 	time = datetime.now(tz).strftime("%H:%M:%S")
 	print("\n\n" + time, "    Current Price   1-hour Average")
-	print("-------------------------------------------")
+	print(LINE)
 	for stock in stocks:
 		stock.printPrice()
 	print("\n")
@@ -55,7 +56,7 @@ def printSummary(stocks, money):
 	today = date.today()
 	print("\n\nEND OF DAY SUMMARY\n")
 	print(today.strftime("%m/%d/%Y"), "       BUYS    SELLS")
-	print("-------------------------------------------")
+	print(LINE)
 	for stock in stocks:
 		stock.printTradeSummary()
 
@@ -85,13 +86,9 @@ def getPrices(stocks):
 # Checks if the stock has been indeed bought at a lower price than the 
 # price at which it is about to be sold, which is sell_price.
 def checkSellPrice(sell_price, bought_list):
-	
-	for price in bought_list:
-		if (sell_price > price):
-			bought_list.remove(price)
-			return True
 
-	return False
+	result = any(sell_price > price for price in bought_list)
+	return result
 
 # Executes BUY or SELL orders for each stock in portfolio using the mean 
 # reversion strategy. Updates the fund, the number of stocks in possession, the
