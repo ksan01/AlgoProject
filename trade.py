@@ -87,8 +87,12 @@ def getPrices(stocks):
 # price at which it is about to be sold, which is sell_price.
 def checkSellPrice(sell_price, bought_list):
 
-	result = any(sell_price > price for price in bought_list)
-	return result
+	lower_prices = [elem for elem in bought_list if elem < sell_price]
+	if (not lower_prices):
+		return False
+	else:
+		bought_list.remove(lower_prices[0])
+		return True
 
 # Executes BUY or SELL orders for each stock in portfolio using the mean 
 # reversion strategy. Updates the fund, the number of stocks in possession, the
@@ -107,7 +111,7 @@ def trade(stocks, money):
 					stock.count -= 1
 					stock.sells += 1
 				else:
-					print("\nPRICE CLASH - No order for", stock.name, "\n")
+					print("\nNo order for", stock.name, "\n")
 			else:
 				print("\nNo order for", stock.name + ", no stock to execute", 
 					"SELL order\n")
