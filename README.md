@@ -30,4 +30,8 @@ For each stock in the portfolio;
 
 ## The Program
 
-![picture](/images/open.png)
+![Open](images/open.png)
+Initial screen when the stock market is open includes the portfolio and the starting fund
+
+![Closed](images/closed.png)
+When the stock market is closed, prints the message above and exits the program
