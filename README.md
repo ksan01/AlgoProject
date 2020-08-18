@@ -28,7 +28,6 @@ For each stock in the portfolio;
 - If z-score is smaller than -1, meaning that the current price is below
   the moving average by at least one standard deviation, executes a BUY order
 
-<br/><br/>
 Other Features:
 - Keeps track of all the buy prices of the stocks so that the algorithm cannot 
 wrongfully sell a stock at a lower price than it has been bought
