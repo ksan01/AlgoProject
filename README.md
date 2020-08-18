@@ -28,6 +28,17 @@ For each stock in the portfolio;
 - If z-score is smaller than -1, meaning that the current price is below
   the moving average by at least one standard deviation, executes a BUY order
 
+<br/><br/>
+Other Features:
+- Keeps track of all the buy prices of the stocks so that the algorithm cannot 
+wrongfully sell a stock at a lower price than it has been bought
+- If the next BUY order will decrease the starting fund by 30%, does not execute
+the order or any other BUY orders until the fund increases again, and prints an 
+appropriate message
+- If the z-score of a stock is greater than 1, but the stock is not in possesion, 
+i.e. there is no stock to sell, does not execute a SELL order and prints an 
+appropriate message
+
 ## The Program
 
 **Initial screen when the stock market is open prints the portfolio and the starting fund:**
