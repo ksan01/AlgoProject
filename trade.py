@@ -4,9 +4,12 @@ from datetime import datetime, date
 from time import sleep
 import pytz
 import statistics
+import requests
+import xml.etree.ElementTree as ET
 
 
 API = tradeapi.REST()
+URL = "https://api.tradeking.com/v1/market/clock.xml"
 SYMBOLS = ['AAPL', 'MSFT', 'WMT', 'JNJ', 'CVX']
 BUY  = 'BUY'
 SELL = 'SELL'
@@ -19,8 +22,10 @@ START = 50000
 
 # Checks if the stock market is open
 def checkMarket():
-	clock = API.get_clock()
-	return clock.is_open
+	res = requests.get(URL).content
+	tree = ET.fromstring(res)
+	result = tree.find('status/current')
+	return (result.text == "open")
 
 # Initializes the portfolio by creating an array of empty stock objects for the
 # stocks in portfolio, using their ticker symbols as the names of the stock
@@ -91,6 +96,7 @@ def checkSellPrice(sell_price, bought_list):
 	if (not lower_prices):
 		return False
 	else:
+		# remove the price from price list of bought stocks
 		bought_list.remove(lower_prices[0])
 		return True
 
@@ -149,7 +155,7 @@ def main():
 	printPortfolio(stocks)
 	fund = START
 
-	while (checkMarket()):
+	while True:
 		getPrices(stocks)
 		printPrices(stocks)
 		fund = trade(stocks, fund)
