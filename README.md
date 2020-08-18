@@ -30,8 +30,26 @@ For each stock in the portfolio;
 
 ## The Program
 
+Initial screen when the stock market is open prints the portfolio and the starting fund:
 ![Open](images/open.png)
-Initial screen when the stock market is open includes the portfolio and the starting fund
-
+<br/><br/>
+When the stock market is closed, prints the message below and exits the program:
 ![Closed](images/closed.png)
-When the stock market is closed, prints the message above and exits the program
+<br/><br/>
+The price table below gets printed and updated each minute:
+![Prices](images/price_table.png)
+<br/><br/>
+An example BUY order output:
+![BUY](images/buy.png) 
+<br/><br/>
+An example SELL order output:
+![SELL](images/sell.png) 
+<br/><br/>
+An example screen that the user views each minute:
+![Screen](images/screen.png)
+
+
+
+
+
+
