@@ -27,3 +27,7 @@ For each stock in the portfolio;
   the moving average by at least one standard deviation, executes a SELL order
 - If z-score is smaller than -1, meaning that the current price is below
   the moving average by at least one standard deviation, executes a BUY order
+
+## The Program
+
+![Open](images/open)
