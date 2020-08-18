@@ -30,4 +30,4 @@ For each stock in the portfolio;
 
 ## The Program
 
-![picture](images/open.png)
+![picture](/images/open.png)
