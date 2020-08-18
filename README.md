@@ -32,7 +32,7 @@ For each stock in the portfolio;
 
 **Initial screen when the stock market is open prints the portfolio and the starting fund:**
 <br/><br/>
-![Open](images/open.png)<!-- .element height="50%" width="50%" -->
+![Open](images/open.png){:height="50%" width="50%"}
 <br/><br/>
 
 **When the stock market is closed, prints the message below and exits the program:**
@@ -40,7 +40,7 @@ For each stock in the portfolio;
 ![Closed](images/closed.png)
 <br/><br/>
 
-**The price table below gets printed and updated each minute:**
+**An example price table that gets printed and updated each minute:**
 <br/><br/>
 ![Prices](images/price_table.png)
 <br/><br/>
