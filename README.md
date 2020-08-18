@@ -32,7 +32,7 @@ For each stock in the portfolio;
 
 **Initial screen when the stock market is open prints the portfolio and the starting fund:**
 <br/><br/>
-![Open](images/open.png){:height="50%" width="50%"}
+<img src="images/open.png" alt="Open" width="50%" height="50%">
 <br/><br/>
 
 **When the stock market is closed, prints the message below and exits the program:**
