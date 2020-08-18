@@ -37,27 +37,27 @@ For each stock in the portfolio;
 
 **When the stock market is closed, prints the message below and exits the program:**
 <br/><br/>
-![Closed](images/closed.png)
+<img src="images/closed.png" alt="Closed" width="50%" height="50%">
 <br/><br/>
 
 **An example price table that gets printed and updated each minute:**
 <br/><br/>
-![Prices](images/price_table.png)
+<img src="images/price_table.png" alt="Prices" width="50%" height="50%">
 <br/><br/>
 
 **An example BUY order output:**
 <br/><br/>
-![BUY](images/buy.png) 
+<img src="images/buy.png" alt="BUY" width="50%" height="50%">
 <br/><br/>
 
 **An example SELL order output:**
 <br/><br/>
-![SELL](images/sell.png) 
+<img src="images/sell.png" alt="SELL" width="50%" height="50%">
 <br/><br/>
 
 **An example screen that the user views each minute:**
 <br/><br/>
-![Screen](images/screen.png)
+<img src="images/screen.png" alt="Screen" width="50%" height="50%">
 
 
 
