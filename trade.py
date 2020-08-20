@@ -155,7 +155,7 @@ def main():
 	printPortfolio(stocks)
 	fund = START
 
-	while True:
+	while checkMarket():
 		getPrices(stocks)
 		printPrices(stocks)
 		fund = trade(stocks, fund)
