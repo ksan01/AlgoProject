@@ -35,7 +35,7 @@ wrongfully sell a stock at a lower price than it has been bought
 the order or any other BUY orders until the fund increases again, and prints an 
 appropriate message
 - If the z-score of a stock is greater than 1, but the stock is not in possesion, 
-i.e. there is no stock to sell, does not execute a SELL order and prints an 
+i.e. if there is no stock to sell, does not execute a SELL order and prints an 
 appropriate message
 
 ## The Program
@@ -68,6 +68,10 @@ appropriate message
 **An example screen that the user views each minute:**
 <br/><br/>
 <img src="images/screen.png" alt="Screen" width="50%" height="50%">
+
+**Prints a buy/sell summary at the end of the trading session when the market closes**
+<br/><br/>
+<img src="images/summary.png" alt="Screen" width="50%" height="50%">
 
 
 
