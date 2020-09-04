@@ -114,9 +114,12 @@ def trade(stocks, money):
 	for stock in stocks:
 
 		# if the z-score between the current price and 1-hour average of the 
-		# stocks is over the SELL_FACTOR, execute SELL order
+		# stock is over the SELL_FACTOR, execute SELL order
 		if (stock.zscore > SELL_FACTOR):
+			# check if the stock is in possesion, i.e. if there is a stock to sell
 			if (stock.count > 0):
+				# check if the stock has been bought at a lower price than the
+				# price at which it is about to be sold
 				if (checkSellPrice(stock.price, stock.bought)):
 					stock.printTradeOrder(SELL)
 					money += stock.price
