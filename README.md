@@ -3,7 +3,7 @@
 *Kerem San* 
 <br/><br/>
 
-An automated trading bot that trades a small portfolio of five stocks using a simple mean reversion trading algorithm.
+An automated trading bot that trades a small portfolio of ten stocks using a simple mean reversion trading algorithm.
 
 **Disclaimer:** This program is not a fully developed trading bot that 
 promises or attempts to generate positive returns every single trading 
@@ -11,11 +11,19 @@ session. The sole purpose of this program is for me to get practice
 translating a simple trading strategy into code and gain experience 
 with algorithmic trading.
 
+API: Alpaca Paper Trading API
+
 ## The Portfolio
-- 2 Technology stocks: AAPL (Apple Inc), MSFT (Microsoft Corporation)
-- 1 Consumer Staples stock: WMT (Walmart Inc)
-- 1 Healthcare stock: JNJ (Johnson & Johnson)
-- 1 Energy stock: CVX (Chevron Corporation)
+- AAPL (Apple Inc)
+- MSFT (Microsoft Corporation)
+- FB (Facebook, Inc.)
+- TSLA (Tesla Inc)
+- GOOG (Alphabet Inc)
+- NFLX (Netlix Inc)
+- ZM (Zoom Video Communications Inc)
+- BRK.B (Berkshire Hathaway Inc)
+- JNJ (Johnson & Johnson)
+- CVX (Chevron Corporation)
 
 ## The Algorithm
 
@@ -31,7 +39,7 @@ For each stock in the portfolio;
 Other Features:
 - Keeps track of all the buy prices of the stocks so that the algorithm cannot 
 wrongfully sell a stock at a lower price than it has been bought
-- If the next BUY order will decrease the starting fund by 30%, does not execute
+- If the next BUY order will decrease the starting fund by 25%, does not execute
 the order or any other BUY orders until the fund increases again, and prints an 
 appropriate message
 - If the z-score of a stock is greater than 1, but the stock is not in possesion, 
@@ -69,9 +77,7 @@ appropriate message
 <br/><br/>
 <img src="images/screen.png" alt="Screen" width="50%" height="50%">
 
-**Prints a buy/sell summary at the end of the trading session when the market closes**
-<br/><br/>
-<img src="images/summary.png" alt="Screen" width="50%" height="50%">
+
 
 
 

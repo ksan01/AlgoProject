@@ -10,14 +10,15 @@ import xml.etree.ElementTree as ET
 
 API = tradeapi.REST()
 URL = "https://api.tradeking.com/v1/market/clock.xml"
-SYMBOLS = ['AAPL', 'MSFT', 'WMT', 'JNJ', 'CVX']
+SYMBOLS = ['AAPL', 'MSFT', 'FB', 'TSLA', 'GOOG', 'NFLX', 'ZM', 'BRK.B', 'JNJ', 'CVX']
 BUY  = 'BUY'
 SELL = 'SELL'
 LINE = "-------------------------------------------"
+OPEN = "open"
 PERIOD = 60
 BUY_FACTOR = -1.0
 SELL_FACTOR = 1.0
-START = 50000
+START = 100000
 
 
 # Checks if the stock market is open
@@ -25,7 +26,7 @@ def checkMarket():
 	res = requests.get(URL).content
 	tree = ET.fromstring(res)
 	result = tree.find('status/current')
-	return (result.text == "open")
+	return (result.text == OPEN)
 
 # Initializes the portfolio by creating an array of empty stock objects for the
 # stocks in portfolio, using their ticker symbols as the names of the stock
@@ -125,8 +126,8 @@ def trade(stocks, money):
 		# if the z-score between the current price and 1-hour average of the 
 		# stocks is under the BUY_FACTOR, execute BUY order
 		elif (stock.zscore < BUY_FACTOR):
-			# do not execute a BUY order if the order will decrease the fund by 30%
-			if ((money - stock.price) > (START * 0.70)):
+			# do not execute a BUY order if the order will decrease the fund by 25%
+			if ((money - stock.price) > (START * 0.75)):
 				stock.printTradeOrder(BUY)
 				money -= stock.price
 				stock.count += 1

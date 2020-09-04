@@ -45,20 +45,20 @@ class Stock:
 		self.bought = []
 
 	def printPrice(self):
-		print(self.name.ljust(4), "         ", str(self.price).ljust(8),  
+		print(self.name.ljust(5), "        ", str(self.price).ljust(8),  
 			"       ", str(self.avg).ljust(8))
 
 	def printTradeOrder(self, act):
 		tz = pytz.timezone('America/New_York') 
 		time = datetime.now(tz).strftime("- %H:%M:%S")
-		print("\n\n" + act, "order for", self.name, "at",self.price, time)
+		print("\n" + act, "order for", self.name, "at",self.price, time)
 		print("-------------------------------------------")
 		print("Price:", self.price)
 		print("1-hour Average:", self.avg)
 		print("Z-Score:", round(self.zscore, 3), "\n")
 
 	def printTradeSummary(self):
-		print(self.name.ljust(4), "     	  ", str(self.buys).ljust(3)
+		print(self.name.ljust(5), "     	  ", str(self.buys).ljust(3)
 			, "    ", str(self.sells).ljust(3))
 
 
