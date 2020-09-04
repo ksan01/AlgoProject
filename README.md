@@ -42,6 +42,8 @@ wrongfully sell a stock at a lower price than it has been bought
 - If the next BUY order will decrease the starting fund by 25%, does not execute
 the order or any other BUY orders until the fund increases again, and prints an 
 appropriate message
+- If there is only 30 minutes left for the stock market to close, does not execute
+any new BUY orders
 - If the z-score of a stock is greater than 1, but the stock is not in possesion, 
 i.e. if there is no stock to sell, does not execute a SELL order and prints an 
 appropriate message

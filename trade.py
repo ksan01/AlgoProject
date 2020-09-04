@@ -1,6 +1,6 @@
 import alpaca_trade_api as tradeapi
 from stock import Stock
-from datetime import datetime, date
+from datetime import datetime, date, time
 from time import sleep
 import pytz
 import statistics
@@ -14,7 +14,6 @@ SYMBOLS = ['AAPL', 'MSFT', 'FB', 'TSLA', 'GOOG', 'NFLX', 'ZM', 'BRK.B', 'JNJ', '
 BUY  = 'BUY'
 SELL = 'SELL'
 LINE = "-------------------------------------------"
-OPEN = "open"
 PERIOD = 60
 BUY_FACTOR = -1.0
 SELL_FACTOR = 1.0
@@ -26,7 +25,7 @@ def checkMarket():
 	res = requests.get(URL).content
 	tree = ET.fromstring(res)
 	result = tree.find('status/current')
-	return (result.text == OPEN)
+	return (result.text == "open")
 
 # Initializes the portfolio by creating an array of empty stock objects for the
 # stocks in portfolio, using their ticker symbols as the names of the stock
@@ -101,6 +100,12 @@ def checkSellPrice(sell_price, bought_list):
 		bought_list.remove(lower_prices[0])
 		return True
 
+# Checks whether there is 30 minutes left for the stock market to close
+def checkBuyTime():
+	tz = pytz.timezone('America/New_York') 
+	curr = datetime.now(tz).time()
+	return (curr < time(15, 30))
+
 # Executes BUY or SELL orders for each stock in portfolio using the mean 
 # reversion strategy. Updates the fund, the number of stocks in possession, the
 # number of BUY and SELL orders for the stocks accordingly 
@@ -126,16 +131,20 @@ def trade(stocks, money):
 		# if the z-score between the current price and 1-hour average of the 
 		# stocks is under the BUY_FACTOR, execute BUY order
 		elif (stock.zscore < BUY_FACTOR):
-			# do not execute a BUY order if the order will decrease the fund by 25%
-			if ((money - stock.price) > (START * 0.75)):
-				stock.printTradeOrder(BUY)
-				money -= stock.price
-				stock.count += 1
-				stock.buys += 1
-				stock.bought.append(stock.price)
+			# do not execute a BUY order if the market will close in 30 minutes
+			if (checkBuyTime()):
+				# do not execute a BUY order if the order will decrease the fund by 25%
+				if ((money - stock.price) > (START * 0.75)):
+					stock.printTradeOrder(BUY)
+					money -= stock.price
+					stock.count += 1
+					stock.buys += 1
+					stock.bought.append(stock.price)
+				else:
+					print("\nNo order for", stock.name + ", low fund to execute",
+						"BUY order\n")
 			else:
-				print("\nNo order for", stock.name + ", low fund to execute",
-					"BUY order\n")
+				print("\nNo order for", stock.name, "\n")
 
 		# no BUY or SELL orders if BUY_FACTOR <= z-score <= SELL_FACTOR
 		else:
