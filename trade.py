@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 
 API = tradeapi.REST()
 URL = "https://api.tradeking.com/v1/market/clock.xml"
-SYMBOLS = ['AAPL', 'MSFT', 'FB', 'TSLA', 'GOOG', 'NFLX', 'ZM', 'BRK.B', 'JNJ', 'CVX']
+SYMBOLS = ['AAPL', 'MSFT', 'FB', 'TSLA', 'GOOG', 'NFLX', 'ZM', 'BRK.B', 'JNJ', 'AEM']
 BUY  = 'BUY'
 SELL = 'SELL'
 LINE = "-------------------------------------------"
