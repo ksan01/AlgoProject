@@ -23,7 +23,7 @@ API: Alpaca Paper Trading API
 - ZM (Zoom Video Communications Inc)
 - BRK.B (Berkshire Hathaway Inc)
 - JNJ (Johnson & Johnson)
-- CVX (Chevron Corporation)
+- AEM (Agnico Eagle Mines Ltd)
 
 ## The Algorithm
 
@@ -31,9 +31,9 @@ For each stock in the portfolio;
 - Gets current stock price each minute
 - Updates 1-hour moving average of the stock each minute
 - Compares current price to moving average by computing z-score.
-- If z-score is greater than 1, meaning that the current price is above
+- If the z-score is greater than 1, meaning that the current price is above
   the moving average by at least one standard deviation, executes a SELL order
-- If z-score is smaller than -1, meaning that the current price is below
+- If the z-score is smaller than -1, meaning that the current price is below
   the moving average by at least one standard deviation, executes a BUY order
 
 Other Features:
