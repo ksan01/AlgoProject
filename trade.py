@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 
 API = tradeapi.REST()
 URL = "https://api.tradeking.com/v1/market/clock.xml"
-SYMBOLS = ['AAPL', 'MSFT', 'FB', 'TSLA', 'GOOG', 'NFLX', 'ZM', 'BRK.B', 'JNJ', 'AEM']
+SYMBOLS = ['AAPL', 'MSFT', 'FB', 'TSLA', 'GOOG', 'NFLX', 'ZM', 'BRK.B', 'COST', 'AEM']
 BUY  = 'BUY'
 SELL = 'SELL'
 LINE = "-------------------------------------------"
@@ -45,7 +45,7 @@ def printPortfolio(stocks):
 # the portfolio
 def printPrices(stocks):
 
-	tz = pytz.timezone('America/New_York') 
+	tz  = pytz.timezone('America/New_York') 
 	time = datetime.now(tz).strftime("%H:%M:%S")
 	print("\n\n" + time, "    Current Price   1-hour Average")
 	print(LINE)
@@ -102,7 +102,7 @@ def checkSellPrice(sell_price, bought_list):
 
 # Checks whether there is 30 minutes left for the stock market to close
 def checkBuyTime():
-	tz = pytz.timezone('America/New_York') 
+	tz  = pytz.timezone('America/New_York') 
 	curr = datetime.now(tz).time()
 	return (curr < time(15, 30))
 
