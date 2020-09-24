@@ -22,8 +22,12 @@ API: Alpaca Paper Trading API
 - NFLX (Netlix Inc)
 - ZM (Zoom Video Communications Inc)
 - BRK.B (Berkshire Hathaway Inc)
-- JNJ (Johnson & Johnson)
+- COST (Costco Wholesale Corporation)
 - AEM (Agnico Eagle Mines Ltd)
+
+These stocks were picked from different industries to diversify the portfolio
+and also picked based on volatility and volume, making them good candidates for
+the mean reversion algorithm
 
 ## The Algorithm
 
