@@ -27,7 +27,7 @@ API: Alpaca Paper Trading API
 
 These stocks were picked from different industries to diversify the portfolio
 and also picked based on volatility and volume, making them good candidates for
-the mean reversion algorithm
+the mean reversion algorithm.
 
 ## The Algorithm
 
