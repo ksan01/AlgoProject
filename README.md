@@ -83,6 +83,10 @@ appropriate message
 <br/><br/>
 <img src="images/screen.png" alt="Screen" width="50%" height="50%">
 
+**A BUY/SELL summary as well as the return gets printed after the trading session ends**
+<br/><br/>
+<img src="images/summary.png" alt="Screen" width="50%" height="50%">
+
 
 
 
